@@ -7,15 +7,10 @@ import { BsArrowLeft } from "react-icons/bs";
 import SavedLocation from "../components/SavedLocation";
 
 export const SearchedLocation = () => {
-    const {searchedCityData, hideSaved, setHideSaved} = useGlobalContext();
+    const {searchedCityData} = useGlobalContext();
     const {year, date, minutes, hours, monthName, dayName} = useGlobalContext();
 
     let cityIcon = `https://openweathermap.org/img/wn/${searchedCityData.icon}.png`
-    console.log(searchedCityData.weather)
-
-    const toggleSaved = () => {
-        setHideSaved(!hideSaved)
-     }
 
   return (
     <div className="font-Jost min-h-screen text-white flex justify-between bg-opac relative"
@@ -26,26 +21,23 @@ export const SearchedLocation = () => {
             ? {backgroundImage: `url(${Cloudy})`}
             : {backgroundImage: `url(${Rainy})`}}
     >
-        <div className="min-h-[300px] lg:my-0 my-14 xl:my-0 flex items-center justify-center w-full relative bg-blur">
-        <div className="xl:w-[60%] w-[90%] lg:w-[70%] sm:px-12 px-5 py-2 popup shadow-2xl rounded-2xl xl:py-8 xl:px-[4rem] absolute city-detail">
+        <div className="lg:my-0 px-3 lg:pt-6 flex items-center justify-center w-full bg-blur">
+        <div className="lg:h-[80%] w-full md:px-10 lg:ps-8 lg:w-3/5 px-3 shadow-2xl rounded-2xl city-detail">
           <Link to="/">
-            <div className="bg-[#ccc] w-[2.5rem] h-[2.5rem] my-4 sm:w-[3rem] sm:h-[3rem] cursor-pointer xl:my-8 flex items-center justify-center rounded-[50%]">
+            <div className="bg-[#ccc] w-10 h-10 my-4 text-black text-lg cursor-pointer lg:mt-8 flex items-center justify-center rounded-[50%]">
               <BsArrowLeft />
             </div>
           </Link>
           
-          <div className="flex flex-col-reverse sm:flex-row sm:justify-between sm:items-center my-5">
-            <div className="my-3">
-              <p className="text-2xl sm:text-4xl mb-3 xl:text-4xl font-bold">{searchedCityData.name}</p>
-              <p>{hours}:{minutes} {hours > 11 ? <span>PM</span> : <span>AM</span>} - {dayName}, {monthName} {date}, {year}</p>
-            </div>
-            <div className="w-full sm:w-[30%] text-center my-5 xl:my-0">
-              <button onClick={toggleSaved} className="bg-[#0077be] text-lg py-2 px-6 rounded-md">Save Location</button>
-            </div>
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-between sm:items-center">
+            <div className="mt-3">
+              <p className="text-2xl mb-3 font-bold">{searchedCityData.name}</p>
+              <p className="lg:text-[20px] md:text-[18px] text-xs">{hours}:{minutes < 10 ? '0'+minutes : minutes} {hours > 11 ? <span>PM</span> : <span>AM</span>} - {dayName}, {monthName} {date}, {year}</p>
+            </div>            
           </div>
 
-          <div className="flex flex-col lg:flex-row justify-between">
-            <div className="flex w-full sm:w-[70%] sm:my-4 mx-auto gap-5 items-center sm:justify-center xl:gap-5 xl:w-2/4 lg:border-r-2 lg:border-gray-200">
+          <div className="flex mt-2 flex-col lg:flex-row justify-between">
+            <div className="flex w-full sm:w-[70%] justify-between sm:my-4 mx-auto gap-5 items-center sm:justify-center xl:gap-5 xl:w-2/4 lg:border-r-2 lg:border-gray-200">
               <div className="h-[5rem] w-[5rem] xl:h-[6rem] xl:w-[8rem]">
                 <img className="h-full w-full" src={cityIcon} alt="" />
               </div>
@@ -86,7 +78,7 @@ export const SearchedLocation = () => {
             </div>
           </div>          
             <Link to="/saved" className="w-full sm:w-[60%] sm:mx-auto xl:w-3/4 xl:mx-auto flex justify-center my-5">
-              <button className="w-full sm:w-[80%] bg-white text-[#0077be] text-lg py-2 px-6 rounded-md border-2 border-[#0077be]">View Saved Locations</button>
+              <button className="w-full sm:w-3/4 bg-white text-[#0077be] text-lg py-2 sm:px-6 rounded-md border-2 border-[#0077be]">View Saved Locations</button>
             </Link>          
         </div>
       </div>

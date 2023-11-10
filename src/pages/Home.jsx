@@ -16,7 +16,7 @@ const Home = () => {
     const [inputData, setInputData] = useState('')
     const [appHistory, setAppHistory] = useState([]);
     const [isClicked, setIsClicked] = useState(false);
-    let store = appHistory;
+    let store = "appHistory";
 
     const getUserLocation = () => {
         try {
@@ -108,8 +108,7 @@ const Home = () => {
     }
 
     const deleteSearchHistory = (index) => {        
-        const updatedList = appHistory.filter((_, city) => city !== index);
-        store = updatedList;
+        const updatedList = appHistory.filter((_, id) => id !== index);        
         localStorage.setItem(store, updatedList);
         setAppHistory(updatedList);
     }
@@ -169,7 +168,9 @@ const Home = () => {
                                 {appHistory.map((cities, index) => {
                                     return(
                                         <div key={index} className="flex justify-between mb-3 cursor-pointer items-center w-full">
-                                            <p className="text-xl">{cities}</p>                                            
+                                            <Link to="/search">
+                                                <p className="text-xl">{cities}</p>
+                                            </Link>                                            
                                             <CgClose onClick={() => deleteSearchHistory(index)} className="text-3xl text-[#ff0000] p-1 rounded-md cursor-pointer bg-[#ccc]"/>
                                         </div>                
                                     )
