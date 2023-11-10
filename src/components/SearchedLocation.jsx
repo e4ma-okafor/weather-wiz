@@ -7,7 +7,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import SavedLocation from "./SavedLocation";
 
 export const SearchedLocation = () => {
-    const {searchedCityData, setSearchedCityData, hideSaved, setHideSaved} = useGlobalContext();
+    const {searchedCityData, hideSaved, setHideSaved} = useGlobalContext();
     const {year, date, minutes, hours, monthName, dayName} = useGlobalContext();
 
     let cityIcon = `https://openweathermap.org/img/wn/${searchedCityData.icon}.png`
@@ -26,7 +26,7 @@ export const SearchedLocation = () => {
             ? {backgroundImage: `url(${Cloudy})`}
             : {backgroundImage: `url(${Rainy})`}}
     >
-        <div className="h-screen lg:my-0 my-14 xl:my-0 flex items-center justify-center w-full relative">
+        <div className="min-h-[300px] lg:my-0 my-14 xl:my-0 flex items-center justify-center w-full relative bg-blur">
         <div className="xl:w-[60%] w-[90%] lg:w-[70%] sm:px-12 px-5 py-2 popup shadow-2xl rounded-2xl xl:py-8 xl:px-[4rem] absolute city-detail">
           <Link to="/">
             <div className="bg-[#ccc] w-[2.5rem] h-[2.5rem] my-4 sm:w-[3rem] sm:h-[3rem] cursor-pointer xl:my-8 flex items-center justify-center rounded-[50%]">
@@ -84,11 +84,10 @@ export const SearchedLocation = () => {
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="w-full sm:w-[60%] sm:mx-auto xl:w-3/4 xl:mx-auto flex justify-center my-5">
-            <button className="w-full sm:w-[80%] bg-white text-[#0077be] text-lg py-2 px-6 rounded-md border-2 border-[#0077be]">View Saved Locations</button>
-          </div>
+          </div>          
+            <Link to="/saved" className="w-full sm:w-[60%] sm:mx-auto xl:w-3/4 xl:mx-auto flex justify-center my-5">
+              <button className="w-full sm:w-[80%] bg-white text-[#0077be] text-lg py-2 px-6 rounded-md border-2 border-[#0077be]">View Saved Locations</button>
+            </Link>          
         </div>
       </div>
       <SavedLocation />

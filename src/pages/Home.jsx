@@ -108,13 +108,14 @@ const Home = () => {
     }
 
     const deleteSearchHistory = (index) => {        
-        const updatedList = appHistory.filter((_, i) => i !== index);
+        const updatedList = appHistory.filter((_, city) => city !== index);
+        store = updatedList;
         localStorage.setItem(store, updatedList);
         setAppHistory(updatedList);
     }
 
   return (
-    <div className="min-h-screen pl-20 text-white font-bold font-Jost"
+    <div className="min-h-screen lg:pl-20 text-white font-bold font-Jost"
         style={
             weatherData.weather === 'Clear' 
             ? {backgroundImage: `url(${Clear})`}
@@ -122,36 +123,40 @@ const Home = () => {
             ? {backgroundImage: `url(${Cloudy})`}
             : {backgroundImage: `url(${Rainy})`}}
     >
-        <h3 className="sm:pt-12 sm:pb-8 text-lg xl:pt-10 xl:text-lg font-semibold">Weather-wiz</h3>
+        <h3 className="md:px-10 lg:px-0 text-lg p-5 xl:pt-10 xl:text-lg font-semibold">Weather-wiz</h3>
         {isLoading ? (
             <>                
-                <div className="min-h-screen flex justify-center items-center">                
+                <div className="min-h-screen flex flex-col gap-20 justify-center items-center">                
                     <div>
                         <ReactLoading type="spin" color="#0066ff"
                             height={100} width={50} 
                         />
                     </div>
+                    <div>
+                        <p>Failed to fetch weather of current location.</p>
+                        <p>Check your internet connectivity or enable your location</p>
+                    </div>
                 </div>
             </>
         ) : (
             <div className="">
-                <div className="flex gap-4">
-                    <div className="w-[55%] flex gap-3 pt-80">
-                        <h1 className="text-6xl sm:text-7xl sm:font-bold sm:w-1/2 font-semibold text-center mb-8 md:mb-0 xl:text-7xl xl:font-bold">{weatherData.temp}°</h1>
-                        <div className="sm:w-[20%] md:w-3/5 md:items-start flex flex-col items-center justify-center font-semibold xl:w-3/5">
+                <div className="lg:flex gap-4">
+                    <div className="md:px-10 lg:px-0 md:mb-20 lg:w-[55%] lg:flex md:flex gap-3 lg:pt-80">
+                        <h1 className="mt-5 lg:mt-0 text-6xl font-semibold text-center mb-8 md:mb-0 xl:text-7xl xl:font-bold">{weatherData.temp}°</h1>
+                        <div className="md:w-4/5 flex flex-col md:items-start md:mt-2 lg:mt-0 lg:gap-4 items-center justify-center font-semibold">
                             <p className="text-2xl xl:text-2xl xl:font-bold">{weatherData.name}</p> 
-                            <p className="pb-2 xl:text-md xl:font-semibold">{hours}:{minutes} {hours > 11 ? <span>PM</span> : <span>AM</span>} - {dayName}, {monthName} {date}, {year}</p>
+                            <p className="pb-2 lg:text-[20px] md:text-[18px] text-xs xl:font-semibold">{hours}:{minutes < 10 ? '0'+minutes : minutes} {hours > 11 ? <span>PM</span> : <span>AM</span>} - {dayName}, {monthName} {date}, {year}</p>
                         </div>
-                        <div className="sm:w-[10%] md:items-start flex flex-col items-center">
+                        <div className="mb-4 lg:mb-0 md:items-start flex flex-col items-center">
                             <img src={imgURL} alt="" />
                             <p className="text-2xl xl:text-xl font-bold">{weatherData.weather}</p>
                         </div>                        
                     </div>
-                    <div className="relative">
-                    <div className="w-[38%] h-full px-6 shadow-xl backdrop-blur-lg bg-[rgba(255,255,255,0.15)] fixed top-0 right-0 pt-10">
+                    <div className="lg:relative">
+                    <div className="w-full lg:w-[38%] h-full px-6 shadow-xl backdrop-blur-lg bg-[rgba(255,255,255,0.15)] lg:fixed top-0 right-0 pt-10">
                         <form>
-                            <div className="flex justify-between font-normal w-full items-center bg-white border-none outline-none p-1 rounded-md">
-                                <input className="font-normal text-black placeholder:text-gray-600 w-11/12 focus:border-none focus:outline-none" type="text" placeholder="Search for a city" value={inputData} onChange={getInputData} />
+                            <div className="flex justify-between font-normal w-full items-center bg-white border-none outline-none p-0.5 lg:p-1 rounded-md">
+                                <input className="font-normal text-xs text-black placeholder:text-gray-600 w-11/12 focus:border-none focus:outline-none" type="text" placeholder="Search for a city" value={inputData} onChange={getInputData} />
                                 <Link to="/search">
                                     <button onClick={SearchedCity} className="bg-[#0077be] rounded-md p-2">Search</button>
                                 </Link>
@@ -159,8 +164,8 @@ const Home = () => {
                         </form>
                         <div className="mt-10 border-b-[1px] font-normal border-b-gray-400">
                             <p className="mb-4">Your Previous Searches</p>
-                            {appHistory.length === 0 ? <p>No Searches Yet</p> : ''}                            
-                            <div className="h-[7rem]">
+                            {appHistory.length === 0 ? <p>No Searches Yet</p> : (
+                                <div className="h-[7rem] overflow-y-scroll">
                                 {appHistory.map((cities, index) => {
                                     return(
                                         <div key={index} className="flex justify-between mb-3 cursor-pointer items-center w-full">
@@ -169,24 +174,26 @@ const Home = () => {
                                         </div>                
                                     )
                                 })}
-                            </div> 
+                                </div>
+                            )}                            
+                             
                         </div>
                         <div>                          
                             <h3 className="text-xl font-semibold mt-7 mb-5">Current Location Weather Detail</h3>
                             <div className="mb-3 flex justify-between items-center">
-                                <p className="text-xl font-semibold">Humidity</p>
-                                <p className="text-xl font-semibold">{weatherData.humidity}%</p>
+                                <p className="lg:text-xl text-sm font-semibold">Humidity</p>
+                                <p className="lg:text-xl text-sm font-semibold">{weatherData.humidity}%</p>
                             </div>
                             <div className="mb-3 flex justify-between items-center">
-                                <p className="text-xl font-semibold">Temperature</p>
-                                <p className="text-xl font-semibold">{weatherData.temp}°C</p>
+                                <p className="lg:text-xl text-sm font-semibold">Temperature</p>
+                                <p className="lg:text-xl text-sm font-semibold">{weatherData.temp}°C</p>
                             </div>          
                             <div className="mb-3 flex justify-between items-center">
-                                <p className="text-xl font-semibold">Windspeed</p>
-                                <p className="text-xl font-semibold">{weatherData.windSpeed} m/s</p>
+                                <p className="lg:text-xl text-sm font-semibold">Windspeed</p>
+                                <p className="lg:text-xl text-sm font-semibold">{weatherData.windSpeed} m/s</p>
                             </div>                            
                             <Link to='/saved' className="xl:mt-6">
-                                <button className="mb-7 mt-4 bg-white text-blue-500 py-3 px-7 rounded-md border border-blue-500 shadow-sm">View Saved Locations</button>
+                                <button className="lg:text-xl text-sm mb-7 mt-4 bg-white text-blue-500 py-3 px-7 rounded-md border border-blue-500 shadow-sm">View Saved Locations</button>
                             </Link>
                         </div>                                 
                     </div>
