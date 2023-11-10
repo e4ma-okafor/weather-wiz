@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import { SearchedLocation } from "./components/SearchedLocation";
+import { SearchedLocation } from "./pages/SearchedLocation";
 import SavedCity from "./pages/SavedCity";
 
 function App () {

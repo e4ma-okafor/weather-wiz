@@ -4,7 +4,7 @@ import Cloudy from "../assets/images/cloudy.jpg";
 import Rainy from "../assets/images/rainy-day.jpg";
 import { Link } from "react-router-dom";
 import { BsArrowLeft } from "react-icons/bs";
-import SavedLocation from "./SavedLocation";
+import SavedLocation from "../components/SavedLocation";
 
 export const SearchedLocation = () => {
     const {searchedCityData, hideSaved, setHideSaved} = useGlobalContext();
